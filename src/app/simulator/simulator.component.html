@@ -1,0 +1,54 @@
+<div class="controls">
+  <div *ngIf="!isPawnPlaced">
+    <label for="x">X</label>
+    <input type="number" id="x" [(ngModel)]="x" min="0" max="7" />
+    <label for="x">Y</label>
+    <input type="number" id="x" [(ngModel)]="y" min="0" max="7" />
+  </div>
+  <div *ngIf="!isPawnPlaced">
+    <label for="direction">Direction</label>
+    <select id="direction" [(ngModel)]="direction">
+      <option value="NORTH">North</option>
+      <option value="SOUTH">South</option>
+      <option value="EAST">East</option>
+      <option value="WEST">West</option>
+    </select>
+  </div>
+  <div *ngIf="!isPawnPlaced" class="radio-group">
+    <label>
+      <input type="radio" name="color" value="White" [(ngModel)]="color" />
+      White
+    </label>
+    <label>
+      <input type="radio" name="color" value="Black" [(ngModel)]="color" />
+      Black
+    </label>
+  </div>
+
+  <button *ngIf="isPawnPlaced" (click)="rotateLeft()">LEFT</button>
+  <button *ngIf="isPawnPlaced" (click)="movePawn()">MOVE</button>
+  <button *ngIf="isPawnPlaced" (click)="rotateRight()">RIGHT</button>
+  <button *ngIf="isPawnPlaced" (click)="reportPosition()">REPORT</button>
+  <button (click)="placePawn()">PLACE</button>
+</div>
+<div class="board-container">
+  <div class="board">
+    <div *ngFor="let row of board; let i = index" class="row">
+      <div
+        *ngFor="let cell of row; let j = index"
+        [class.black]="(i + j) % 2 !== 0"
+        class="cell"
+      >
+        <img
+          *ngIf="pawn.x === i && pawn.y === j"
+          src="assets/pawn.jpg"
+          [style.transform]="'rotate(' + pawn.direction + 'deg)'"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="status">
+  <p>{{ status }}</p>
+</div>
